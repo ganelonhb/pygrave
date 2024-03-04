@@ -1,4 +1,6 @@
 """Scene Objects for making games with PyGrave"""
 
-class Scene:
+from .thing import Thing
+
+class Scene(Thing):
     pass
