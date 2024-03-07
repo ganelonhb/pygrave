@@ -5,15 +5,28 @@ from sys import platform
 
 # PyGrave info
 
-GRAVE_VERSION_NAME  = "ALEPH"
+GRAVE_VERSION_NAME  = "ALPHA"
 GRAVE_VERSION_NUM   = "0.0.0"
 GRAVE_SUBVERSION    = "α"
-
+GRAVE_FULLVERSION   = f"{GRAVE_VERSION_NAME} {GRAVE_VERSION_NUM}{GRAVE_SUBVERSION}"
 
 # Paths
 
-UNIX_SYSTEMS = ["aix", "darwin", "freebsd", "linux", "openbsd"]
-WINDOWS_SYSTEMS = ["win32", "win64", "cygwin", "msys", "nt"]
+UNIX_SYSTEMS = {
+    "aix",
+    "darwin",
+    "freebsd",
+    "linux",
+    "openbsd",
+}
+
+WINDOWS_SYSTEMS = {
+    "win32",
+    "win64",
+    "cygwin",
+    "msys",
+    "nt",
+}
 
 GRAVE_DIR, _        = path.split(path.abspath(__file__))
 

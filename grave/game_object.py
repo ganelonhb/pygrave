@@ -5,6 +5,7 @@ from .tag import Tag
 from .signal import Signal, signal
 from .grave_tester import GraveTester
 
+
 class GameObject(Thing):
     """Defines a kind of game object that supports a tagging system"""
 
@@ -22,27 +23,31 @@ class GameObject(Thing):
         self._active : bool = active
         self._tags : dict[str, Tag] = tags
 
-        self.signals = {getattr(self, func).__name__ : Signal() for func in dir(self) if callable(getattr(self, func)) and "__PYGRAVE_SIGNAL_NAME__" in dir(getattr(self, func))}
+        self.signals = {
+            getattr(self, func).__name__ : Signal()
+            for func in dir(self)
+            if (
+                callable(getattr(self, func))
+                and "__PYGRAVE_SIGNAL_NAME__" in dir(getattr(self, func))
+                )
+        }
 
-    @property
     def name(self) -> str:
         """The name of the object"""
 
         return self._name
 
-    @property
     def active(self) -> str:
         """Will the object be active in the scene"""
 
         return self._active
 
-    @active.setter
-    def active(self, is_active: bool) -> None:
+
+    def set_active(self, is_active: bool) -> None:
         """Active setter"""
 
         self._active = is_active
 
-    @property
     def tags(self) -> dict[str, Tag]:
         """get the dictionary of tags"""
 
@@ -68,6 +73,7 @@ class GameObject(Thing):
             self._tags[kwargs["name"]] = Tag(name, desc, data)
         else:
             raise ValueError("Incorrect arguments passed to add_tag")
+
 
 class GameObjectTester(GraveTester):
     def init_game_object(self):

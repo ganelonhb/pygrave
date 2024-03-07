@@ -6,8 +6,11 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 import pygame
 import warnings
 
+from typing import Any
+
 from .pygrave_constants import GRAVE_DIR
 from .game_object import GameObject
+from .grave_tester import GraveTester
 from .scene import Scene
 
 class VideoGame(GameObject):
@@ -20,7 +23,7 @@ class VideoGame(GameObject):
         surface_flags: int = pygame.HWSURFACE | pygame.DOUBLEBUF,
         window_title: str = "PyGrave Game",
         icon_path: str = os.path.join(GRAVE_DIR, "res", "icon.png"),
-        global_things : dict[str, object]= None,
+        global_things : dict[str, Any]= None,
         ):
         """Initialize a new game"""
 
@@ -55,6 +58,14 @@ class VideoGame(GameObject):
                 )
             )
 
+    def window_title(self):
+        return self._title
+
+    def window_size(self):
+        return self._window_size
+
+    def screen(self):
+        return self._screen
 
     def __call__(self) -> int:
         """alias of run() to allow calling of videogames"""
@@ -64,3 +75,14 @@ class VideoGame(GameObject):
         """run the main game loop"""
 
         raise NotImplementedError
+
+class VideoGameTester(GraveTester):
+    def test_init(self):
+        foo = VideoGame(1920, 1080, window_title="FOOBAR", global_things={"fizz" : "buzz"})
+
+        return (
+            foo._window_size == (1920, 1080),
+            foo._title == "FOOBAR",
+            foo._global_things["FOOBAR"] == foo,
+            foo._global_things["fizz"] == "buzz",
+            )

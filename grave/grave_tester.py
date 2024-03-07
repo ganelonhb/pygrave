@@ -14,7 +14,15 @@ class GraveTester(Thing):
 
         self._results : list[bool] = []
 
-        self._tests = [getattr(self, func) for func in dir(self) if callable(getattr(self, func)) and not func.startswith("__") and func not in ["run_tests"]]
+        self._tests = [
+            getattr(self, func)
+            for func in dir(self)
+            if (
+                callable(getattr(self, func))
+                and not func.startswith("__")
+                and func not in {"run_tests"}
+                )
+        ]
 
     def run_tests(self) -> str:
         """Run each test in the class"""

@@ -1,5 +1,7 @@
 """tags that can contain data of any arbitrary type"""
 
+from typing import Any
+
 from .thing import Thing
 
 from .grave_tester import GraveTester
@@ -7,14 +9,14 @@ from .grave_tester import GraveTester
 class Tag(Thing):
     """A tag can assist in the creation of an ECS system."""
 
-    def __init__(self, name: str, description: str = "", data: object = None):
+    def __init__(self, name: str, description: str = "", data: Any = None):
         """Initialize a tag object"""
 
         super().__init__()
 
         self._name : str = name
         self._description : str= description
-        self._data : object = data
+        self._data : Any = data
         self._is_active : bool = True
 
     @property
@@ -53,13 +55,13 @@ class Tag(Thing):
         self._is_active = is_active
 
     @property
-    def data(self) -> object:
+    def data(self) -> Any:
         """Getter for Tag Data"""
 
         return self._data
 
     @data.setter
-    def data(self, new_data : object) -> None:
+    def data(self, new_data : Any) -> None:
         """Setter for tag data"""
 
         self._data = new_data

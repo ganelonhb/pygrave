@@ -1,8 +1,9 @@
 """A signal can be used as a method by which game objects communicate with each other"""
 
-from typing import Callable, Union
+from typing import Callable, Union, Any
 
 from .function_class import FunctionClass
+
 
 class Signal(FunctionClass):
     """Under the hood, the signal class manages slots"""
@@ -28,12 +29,12 @@ class Signal(FunctionClass):
             slot(*args, **kwargs)
 
     @staticmethod
-    def connect(obj : object, signal : Callable[..., None], slot : Callable[..., None]):
+    def connect(obj : Any, signal : Callable[..., None], slot : Callable[..., None]):
         """Connect a slot to a signal Qt style"""
         obj.signals[signal.__name__].add_slot(slot)
 
     @staticmethod
-    def disconnect(obj : object, signal : Callable[..., None], slot : Callable[..., None]):
+    def disconnect(obj : Any, signal : Callable[..., None], slot : Callable[..., None]):
         """Disconnect a slot from a signal Qt style"""
         obj.signals[signal.__name__].remove_slot(slot)
 
