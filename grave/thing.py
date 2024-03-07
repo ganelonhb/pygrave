@@ -10,7 +10,6 @@ class Thing:
 
         self._thing_id : UUID = uuid4()
 
-    @property
     def thing_id(self) -> UUID:
         """Get the UUID of the thing."""
 

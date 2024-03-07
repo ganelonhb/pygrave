@@ -5,8 +5,13 @@ from .tag import Tag
 from .signal import Signal, signal
 from .grave_tester import GraveTester
 
+class GameObjectMeta(type):
+    def __call__(cls, *args, **kwargs):
+        obj = super().__call__(*args, **kwargs)
+        obj._initialize_signals()
+        return obj
 
-class GameObject(Thing):
+class GameObject(Thing, metaclass=GameObjectMeta):
     """Defines a kind of game object that supports a tagging system"""
 
     def __init__(
@@ -22,6 +27,11 @@ class GameObject(Thing):
         self._name : str = name
         self._active : bool = active
         self._tags : dict[str, Tag] = tags
+
+        self.signals = {}
+
+    def _initialize_signals(self) -> None:
+        """Initialize the signals. Do not call this yourself."""
 
         self.signals = {
             getattr(self, func).__name__ : Signal()

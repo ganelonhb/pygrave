@@ -106,8 +106,8 @@ class SceneDictVideogame(VideoGame):
             current_scene.clock()
             current_scene.start_scene()
 
-            while current_scene.is_valid():
-                self._clock.tick(current_scene.frame_rate())
+            while current_scene.is_valid:
+                self._clock.tick(current_scene.frame_rate)
                 for event in pygame.event.get():
                     current_scene.process_event(event)
                 current_scene.update_scene()

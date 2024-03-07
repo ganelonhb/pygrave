@@ -49,11 +49,19 @@ class Scene(GameObject):
             self._quit = True
             self._is_valid = False
 
+    @property
     def is_valid(self) -> bool:
         """Is the scene valid?"""
 
         return self._is_valid
 
+    @is_valid.setter
+    def is_valid(self, valid : bool) -> None:
+        """setter for is_valid"""
+
+        self._is_valid = valid
+
+    @property
     def frame_rate(self) -> int:
         """return the frame rate of the scene"""
 
