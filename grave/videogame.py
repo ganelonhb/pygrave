@@ -45,7 +45,7 @@ class VideoGame(GameObject):
         if not pygame.mixer:
             warnings.warn("Sound is disabled.", RuntimeWarning)
 
-        self._global_things : dict[str, Thing] = {f"{window_title}": self}
+        self._global_things : dict[str, Thing] = {"root": self, "clock": self._clock}
 
         if global_things is not None:
             for k, v in global_things.items():

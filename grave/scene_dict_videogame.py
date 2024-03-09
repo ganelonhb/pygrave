@@ -93,7 +93,7 @@ class SceneDictVideogame(VideoGame):
 
         for level_name, LevelClass in self._level_classes.items():
             self._scene_dict[level_name] = LevelClass(self._screen, self._global_things)
-            Signal.connect(self._scene_dict[level_name], self._scene_dict[level_name].quit_game, self.quit_game)
+            Signal.connect(self._scene_dict[level_name].quit_game, self.quit_game)
 
     def run(self) -> int:
         """run the game loop"""

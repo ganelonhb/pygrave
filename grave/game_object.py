@@ -1,9 +1,12 @@
 """Every single object in a game should inherit from game_object"""
 
+from uuid import uuid4
+
 from .thing import Thing
 from .tag import Tag
 from .signal import Signal, signal
 from .grave_tester import GraveTester
+
 
 class GameObjectMeta(type):
     def __call__(cls, *args, **kwargs):
@@ -16,7 +19,7 @@ class GameObject(Thing, metaclass=GameObjectMeta):
 
     def __init__(
         self,
-        name: str,
+        name: str = None,
         active : bool = True,
         tags : dict[str, Tag] = {}
         ):
@@ -24,7 +27,7 @@ class GameObject(Thing, metaclass=GameObjectMeta):
 
         super().__init__()
 
-        self._name : str = name
+        self._name : str = name if name is not None else str(uuid4())
         self._active : bool = active
         self._tags : dict[str, Tag] = tags
 
@@ -125,11 +128,11 @@ class GameObjectTester(GraveTester):
         a = SignalGameObject("A")
         b = SignalGameObject("B")
 
-        Signal.connect(a, a.foo, b.bar)
+        Signal.connect(a.foo, b.bar)
 
         a.foo()
         a.foo(fizz=True)
 
-        Signal.disconnect(a, a.foo, b.bar)
+        Signal.disconnect(a.foo, b.bar)
 
         return a.foo() and b.bar not in a.signals["foo"]._slots

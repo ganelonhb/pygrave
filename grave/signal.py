@@ -29,14 +29,22 @@ class Signal(FunctionClass):
             slot(*args, **kwargs)
 
     @staticmethod
-    def connect(obj : Any, signal : Callable[..., None], slot : Callable[..., None]):
+    def connect(signal : Callable[..., None], slot : Callable[..., None]):
         """Connect a slot to a signal Qt style"""
-        obj.signals[signal.__name__].add_slot(slot)
+        if not hasattr(signal, '__self__'):
+            raise ValueError(f"Passed method {signal} is not bound to an object, and cannot be connected to a slot.")
+
+        signal.__self__.signals[signal.__name__].add_slot(slot)
 
     @staticmethod
-    def disconnect(obj : Any, signal : Callable[..., None], slot : Callable[..., None]):
+    def disconnect(signal : Callable[..., None], slot : Callable[..., None]):
         """Disconnect a slot from a signal Qt style"""
-        obj.signals[signal.__name__].remove_slot(slot)
+        if not hasattr(signal, '__self__'):
+            raise ValueError(f"Passed method {signal} is not bound to an object, and cannot be disconnected from a slot.")
+
+        signal.__self__.signals[signal.__name__].remove_slot(slot)
+
+
 
 def signal(f):
     """Decorator for signals. Automatically calls the signal that shares the name as the class method"""

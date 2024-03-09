@@ -10,3 +10,13 @@ class Object2D(GameObject):
         """Implementation of Draw is required."""
 
         raise NotImplementedError
+
+    def update(self) -> None:
+        """Update the Object2D in the scene"""
+
+        raise NotImplementedError
+
+    def collide(self):
+        """return the list of collision rectangles"""
+
+        raise NotImplementedError
