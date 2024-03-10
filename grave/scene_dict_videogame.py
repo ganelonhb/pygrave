@@ -112,7 +112,7 @@ class SceneDictVideogame(VideoGame):
                     current_scene.process_event(event)
                 current_scene.update_scene()
                 current_scene.draw()
-                pygame.display.update()
+                pygame.display.flip()
             command = current_scene.end_scene()
 
             match command:

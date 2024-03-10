@@ -33,7 +33,7 @@ class VideoGame(GameObject):
         self._window_size: tuple[int, int] = (width, height)
         self._clock: pygame.time.Clock = pygame.time.Clock()
 
-        self._screen: pygame.surface.Surface = pygame.display.set_mode((width, height), surface_flags)
+        self._screen = pygame.display.set_mode((width, height), surface_flags)
 
         self._title: str = window_title
         pygame.display.set_caption(window_title)

@@ -31,6 +31,10 @@ class Signal(FunctionClass):
     @staticmethod
     def connect(signal : Callable[..., None], slot : Callable[..., None]):
         """Connect a slot to a signal Qt style"""
+
+        if not callable(signal):
+            raise ValueError(f"Passed object {signal} is not callable, and cannot be used as a signal.")
+
         if not hasattr(signal, '__self__'):
             raise ValueError(f"Passed method {signal} is not bound to an object, and cannot be connected to a slot.")
 
@@ -39,6 +43,9 @@ class Signal(FunctionClass):
     @staticmethod
     def disconnect(signal : Callable[..., None], slot : Callable[..., None]):
         """Disconnect a slot from a signal Qt style"""
+        if not callable(signal):
+            raise ValueError(f"Passed object {signal} is not callable, and cannot be disconnected from a slot.")
+
         if not hasattr(signal, '__self__'):
             raise ValueError(f"Passed method {signal} is not bound to an object, and cannot be disconnected from a slot.")
 

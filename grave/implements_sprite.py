@@ -1,10 +1,12 @@
 """Object2D is a 2D object that can be drawn to the screen"""
 
-from .game_object import GameObject
+from .implement import Implement
 
 
-class Object2D(GameObject):
+class ImplementsSprite(Implement):
     """Object2D is a 2D object that can be drawn to the screen"""
+
+    _surface = None
 
     def draw(self) -> None:
         """Implementation of Draw is required."""
@@ -17,6 +19,6 @@ class Object2D(GameObject):
         raise NotImplementedError
 
     def collide(self):
-        """return the list of collision rectangles"""
+        """return a list of rects that determine collisions"""
 
         raise NotImplementedError
