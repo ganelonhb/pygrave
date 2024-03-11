@@ -4,6 +4,7 @@ from .game_object import GameObject
 from .implements_sprite import ImplementsSprite
 from .implements_position import ImplementsPosition
 
+
 class Widget(GameObject, ImplementsPosition, ImplementsSprite):
     """A drawable that has subwidgets"""
 
