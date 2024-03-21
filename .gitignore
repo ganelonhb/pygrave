@@ -1,3 +1,6 @@
+# Specific Cython-generated .c files
+grave/cimplement.c
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
