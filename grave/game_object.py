@@ -7,21 +7,14 @@ from .tag import Tag
 from .signal import Signal, signal
 from .grave_tester import GraveTester
 
-
-class GameObjectMeta(type):
-    def __call__(cls, *args, **kwargs):
-        obj = super().__call__(*args, **kwargs)
-        obj._initialize_signals()
-        return obj
-
-class GameObject(Thing, metaclass=GameObjectMeta):
+class GameObject(Thing):
     """Defines a kind of game object that supports a tagging system"""
 
     def __init__(
         self,
         name: str = None,
         active : bool = True,
-        tags : dict[str, Tag] = {}
+        tags : dict[str, Tag] = None
         ):
         """Initialize a game object"""
 
@@ -29,21 +22,8 @@ class GameObject(Thing, metaclass=GameObjectMeta):
 
         self._name : str = name if name is not None else str(uuid4())
         self._active : bool = active
-        self._tags : dict[str, Tag] = tags
+        self._tags : dict[str, Tag] = dict() if tags is None else tags
 
-        self.signals = {}
-
-    def _initialize_signals(self) -> None:
-        """Initialize the signals. Do not call this yourself."""
-
-        self.signals = {
-            getattr(self, func).__name__ : Signal()
-            for func in dir(self)
-            if (
-                callable(getattr(self, func))
-                and "__PYGRAVE_SIGNAL_NAME__" in dir(getattr(self, func))
-                )
-        }
 
     def name(self) -> str:
         """The name of the object"""
@@ -116,7 +96,7 @@ class GameObjectTester(GraveTester):
         class SignalGameObject(GameObject):
 
             @signal
-            def foo(self, *args, **kwargs):
+            def foo(*args, **kwargs):
                 print("Hello World!")
 
                 return True

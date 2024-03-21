@@ -2,29 +2,41 @@
 
 from .implement import Implement
 
-
 class ImplementsPosition(Implement):
     """Implment a 2D position vector"""
 
     _x : int = 0
     _y : int = 0
 
-    @property
-    def position(self) -> tuple[int, int]:
-        """Get X and Y as a tuple"""
+    def get_x(self) -> int:
+        return self._x
 
-        return (self._x, self._y)
+    def get_y(self) -> int:
+        return self._y
 
-    @position.setter
-    def position(self, xy : tuple[int, int]) -> None:
-        """set X and Y"""
+    def set_x(self, x : int) -> None:
+        self._x = x
 
-        self._x, self._y = xy[0], xy[1]
+    def set_y(self, y : int) -> None:
+        self._y = y
 
     def set_position(self, x : int, y : int) -> None:
         """set X and Y"""
 
         self._x, self._y = x, y
+
+
+    @property
+    def position(self) -> tuple[int, int]:
+        """Get X and Y as a tuple"""
+
+        return (int(self._x), int(self._y))
+
+    @position.setter
+    def position(self, xy : tuple[int, int]) -> None:
+        """set X and Y"""
+
+        self._x, self._y = xy
     
     @property
     def x(self) -> int:
@@ -36,7 +48,7 @@ class ImplementsPosition(Implement):
     def x(self, X : int) -> None:
         """set the x position"""
 
-        self._x = X
+        self.set_x(X)
 
     @property
     def y(self) -> int:
@@ -48,4 +60,4 @@ class ImplementsPosition(Implement):
     def y(self, Y : int) -> None:
         """set the y position"""
 
-        self._y = Y
+        self.set_y(Y)

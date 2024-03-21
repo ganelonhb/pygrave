@@ -7,7 +7,7 @@ from typing import Any
 from uuid import uuid4
 
 from .game_object import GameObject
-from .signal import signal
+from .signal import Signal
 
 class Scene(GameObject):
     """Base class for making PyGrave Scenes"""
@@ -28,9 +28,8 @@ class Scene(GameObject):
         self._quit = False
         self._timestart = time()
 
-    @signal
-    def quit_game(self):
-        pass
+
+    quit_game = Signal(None)
 
     def clock(self) -> None:
         """Reset the scene clock."""

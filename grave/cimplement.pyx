@@ -1,6 +1,9 @@
 """implements are mixins that add functionality to an object"""
 
-class Implement:
+from cython import cclass
+
+@cclass
+class CImplement:
     """The implement base class does not have a Thing ID"""
 
     def __init__(self, *args, **kwargs):

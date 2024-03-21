@@ -63,7 +63,6 @@ class SceneDictVideogame(VideoGame):
             spec.loader.exec_module(level_modules[module_loc])
 
             class_name : str = ''.join([to_classname(fname) for fname in module_name.split('_')])
-            print(class_name)
 
             self._level_classes[class_name] = getattr(sys.modules[module_loc], class_name)
             if not issubclass(self._level_classes[class_name], Scene):
