@@ -2,7 +2,7 @@
 
 from collections.abc import Callable
 
-from .thing import Thing
+from .Core import Thing
 
 class GraveTester(Thing):
     """Automatically test every single method in a class that inherits from GraveTester"""

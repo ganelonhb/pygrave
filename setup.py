@@ -3,7 +3,7 @@ from Cython.Build import cythonize
 
 
 extensions = [
-    Extension("grave.cimplement", ["grave/cimplement.pyx"]),
+    Extension("grave.CImplements", ["grave/CImplements.pyx"])
     ]
 
 setup(

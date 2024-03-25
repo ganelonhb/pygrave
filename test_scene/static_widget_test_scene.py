@@ -1,9 +1,8 @@
 import pygame
 
-from grave.scene import Scene
-from grave.static_window_widget import StaticWindowWidget
-from grave.abstract_button_widget import AbstractButtonWidget
-from grave.signal import Signal
+from grave.Game import Scene
+from grave.Gui import StaticWindowWidget, AbstractButtonWidget
+from grave.Core import Signal
 
 from os.path import join, abspath, dirname
 

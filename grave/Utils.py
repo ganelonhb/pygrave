@@ -1,9 +1,9 @@
 from typing import Any
 
-from .infix import Infix
+from .Core import Infix
 
-from .implement import Implement
-from .cimplement import CImplement
+from .Implements import Implement
+from .CImplements import CImplement
 
 def __implements__(cls : Any, implement : type) -> True:
     if not issubclass(implement, Implement) and not issubclass(implement, CImplement):

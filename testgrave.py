@@ -1,6 +1,6 @@
 from sys import exit
 
-from grave.scene_dict_videogame import SceneDictVideogame
+from grave.Game import SceneDictVideogame
 
 
 def main() -> None:

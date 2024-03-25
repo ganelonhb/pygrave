@@ -1,19 +1,157 @@
-"""module implements a videogame with a game loop that is managed by a dictionary of scenes"""
-
 import sys
 import os
 import importlib
 
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 import pygame
-
 import re
+import warnings
 
-from typing import Callable, Union, Any
+from time import time
+from typing import Callable, Any, Union
+from uuid import uuid4
 
-from .pygrave_constants import GRAVE_DIR
-from .videogame import VideoGame
-from .scene import Scene
-from .signal import Signal
+from .Constants import GRAVE_DIR
+from .Core import GameObject, Signal
+
+
+class Scene(GameObject):
+    """Base class for making PyGrave Scenes"""
+
+    def __init__(
+        self,
+        screen,
+        global_things,
+        name="Scene"
+    ):
+        """scene initializer"""
+        super().__init__(f"{name}_{uuid4()}")
+
+        self._screen = screen
+        self._global_things = global_things
+        self._frame_rate = 60 if "frame_rate" not in global_things else global_things["frame_rate"]
+        self._is_valid = True
+        self._quit = False
+        self._timestart = time()
+
+
+    quit_game = Signal(None)
+
+    def clock(self) -> None:
+        """Reset the scene clock."""
+
+        self._timestart = time()
+
+    def draw(self) -> None:
+        """draw the scene."""
+
+        pass
+
+    def process_event(self, event) -> None:
+        """Process PyGame events in the scene."""
+
+        if event.type == pygame.QUIT:
+            self._quit = True
+            self._is_valid = False
+
+    @property
+    def is_valid(self) -> bool:
+        """Is the scene valid?"""
+
+        return self._is_valid
+
+    @is_valid.setter
+    def is_valid(self, valid : bool) -> None:
+        """setter for is_valid"""
+
+        self._is_valid = valid
+
+    @property
+    def frame_rate(self) -> int:
+        """return the frame rate of the scene"""
+
+        return self._frame_rate
+
+    def update_scene(self) -> None:
+        """update the scene"""
+
+        pass
+
+    def start_scene(self) -> None:
+        """Start the scene"""
+
+        pass
+
+    def end_scene(self):
+        """end the scene"""
+
+        if self._quit:
+            self.quit_game()
+            return ["QUIT_GAME"]
+
+
+class VideoGame(GameObject):
+    """Base class for creating PyGrave games"""
+
+    def __init__(
+        self,
+        width: int = 800,
+        height: int = 600,
+        surface_flags: int = pygame.HWSURFACE | pygame.DOUBLEBUF,
+        window_title: str = "PyGrave Game",
+        icon_path: str = os.path.join(GRAVE_DIR, "res", "icon.png"),
+        global_things : dict[str, Any]= None,
+        ):
+        """Initialize a new game"""
+
+        pygame.init()
+        pygame.joystick.init()
+
+        self._window_size: tuple[int, int] = (width, height)
+        self._clock: pygame.time.Clock = pygame.time.Clock()
+
+        self._screen = pygame.display.set_mode((width, height), surface_flags)
+
+        self._title: str = window_title
+        pygame.display.set_caption(window_title)
+
+        self._game_over: bool = False
+
+        if not pygame.font:
+            warnings.warn("Fonts is disabled.", RuntimeWarning)
+        if not pygame.mixer:
+            warnings.warn("Sound is disabled.", RuntimeWarning)
+
+        self._global_things : dict[str, Thing] = {"root": self, "clock": self._clock}
+
+        if global_things is not None:
+            for k, v in global_things.items():
+                self._global_things[k] = v
+
+        pygame.display.set_icon(
+            pygame.transform.scale(
+                pygame.image.load(icon_path),
+                (128, 128)
+                )
+            )
+
+    def window_title(self):
+        return self._title
+
+    def window_size(self):
+        return self._window_size
+
+    def screen(self):
+        return self._screen
+
+    def __call__(self) -> int:
+        """alias of run() to allow calling of videogames"""
+        return self.run()
+
+    def run(self) -> int:
+        """run the main game loop"""
+
+        raise NotImplementedError
 
 
 class SceneDictVideogame(VideoGame):
@@ -123,7 +261,3 @@ class SceneDictVideogame(VideoGame):
 
         pygame.quit()
         return 0
-
-
-
-

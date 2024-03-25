@@ -11,5 +11,3 @@ class CImplement:
 
     def validate(self):
         pass
-
-
