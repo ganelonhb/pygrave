@@ -1,5 +1,7 @@
 import pygame
 
+from pygame.mouse import set_cursor
+
 from grave.Game import Scene
 from grave.Gui import StaticWindowWidget, AbstractButtonWidget
 from grave.Core import Signal
@@ -31,6 +33,8 @@ class StaticWidgetTestScene(Scene):
 
         Signal.connect(self.button.on_hover, lambda : print("Hovering entered"))
         Signal.connect(self.button.on_hover_exit, lambda : print("Hovering exited"))
+        Signal.connect(self.button.on_hover, lambda : set_cursor(11))
+        Signal.connect(self.button.on_hover_exit, lambda : set_cursor(0))
         Signal.connect(self.button.on_clicked, lambda : print("Clicked"))
         Signal.connect(self.button.on_pressed, lambda : print("Pressed"))
         Signal.connect(self.button.on_released, lambda : print("Released"))
